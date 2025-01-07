@@ -33,7 +33,7 @@ services:
   # Backend API service
   rockshaver-api:
     container_name: rockshaver-api # The name of the backend API container
-    image: papitodev/rockshaver-api:enduro # Uses the custom API image
+    image: papitodev/rockshaver-api:pacman # Uses the custom API image
     networks:
       - skynet # Connects this service to the 'skynet' network
     depends_on:
@@ -48,7 +48,7 @@ services:
   # Frontend web application service
   rockshaver-web:
     container_name: rockshaver-web # The name of the frontend web app container
-    image: papitodev/rockshaver-web:enduro # Uses the custom web app image
+    image: papitodev/rockshaver-web:pacman # Uses the custom web app image
     networks:
       - skynet # Connects this service to the 'skynet' network
     depends_on:
@@ -60,7 +60,7 @@ services:
   # Mobile application service
   rockshaver-mob:
     container_name: rockshaver-mob # The name of the mobile app container
-    image: papitodev/rockshaver-mob:enduro # Uses the custom mobile app image
+    image: papitodev/rockshaver-mob:pacman # Uses the custom mobile app image
     networks:
       - skynet # Connects this service to the 'skynet' network
     depends_on:
