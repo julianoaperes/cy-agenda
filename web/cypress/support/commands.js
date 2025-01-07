@@ -23,3 +23,15 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+// ***********************************************
+Cypress.Commands.add("assertValidationMessage", (selector, expectedMessage) => {
+  cy.get(selector).then(($input) => {
+    const actualMessage = $input[0].validationMessage;
+    cy.log(`Validation message for ${selector}: ${actualMessage}`);
+    console.log(`Validation message for ${selector}: ${actualMessage}`);
+    if (actualMessage !== expectedMessage) {
+      cy.log(`Expected: ${expectedMessage}, but got: ${actualMessage}`);
+    }
+    expect(actualMessage).to.eq(expectedMessage);
+  });
+});
