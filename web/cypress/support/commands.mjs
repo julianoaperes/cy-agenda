@@ -74,8 +74,6 @@ const customDescribeNumbered = (description, callback) => {
 };
 
 // Export the custom describeNumbering function for use in tests
-module.exports = {
-  customDescribeNumbered,
-};
+export { customDescribeNumbered };
 
-//! *|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||*
+// ! ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
