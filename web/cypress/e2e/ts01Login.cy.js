@@ -6,7 +6,7 @@ customDescribeNumbered('Login', (it) => {
   }),
     it("Should login successfully when the user fills out the form with valid credentials by clicking on the 'Entrar' button", () => {
       cy.get('a[href = "pre-cadastro"]').click(); // When the user clicks on the "Entrar" button
-      cy.get('h2').should('have.text', 'Seus dados'); // Then the user should see the "Seus dados" title
+      cy.get('form h2').should('have.text', 'Seus dados'); // Then the user should see the "Seus dados" title
       cy.get('#nome').type('Teste Qa'); // And fill out the "name" field with "Teste Qa"
       cy.get('#email').type('qateste@teste.com'); // And fill out the "email" field
       cy.get('button[type="submit"]').should('have.text', 'Continuar').click(); // And click on the "Continuar" button
@@ -17,7 +17,7 @@ customDescribeNumbered('Login', (it) => {
     cy.get('a[href = "/agendamento"]')
       .should('have.text', 'Agendar um horário')
       .click(); // When the user clicks on the "Agendar um horário" button
-    cy.get('h2').should('have.text', 'Seus dados'); // Then the user should see the "Seus dados" modal
+    cy.get('form h2').should('have.text', 'Seus dados'); // Then the user should see the "Seus dados" modal
     cy.get('#nome').type('Teste Qa'); // And fill out the "name" field with "Teste Qa"
     cy.get('#email').type('qateste@teste.com'); // And fill out the "email" field
     cy.get('button[type="submit"]').should('have.text', 'Continuar').click(); // And click on the "Continuar" button
@@ -26,22 +26,24 @@ customDescribeNumbered('Login', (it) => {
 
   it('"Seus dados" form: Should displays validation messages after submit, when the fields were empty', () => {
     cy.get('a[href = "pre-cadastro"]').click(); // When the user clicks on the "Entrar" button
-    cy.get('h2').should('have.text', 'Seus dados'); // Then the user should see the "Seus dados" form
+    cy.get('form h2').should('have.text', 'Seus dados'); // Then the user should see the "Seus dados" form
     cy.get('button[type="submit"]').should('have.text', 'Continuar').click(); // And click on the "Continuar" button
     cy.get('#nome').clear(); // And clear the "name" field
-    cy.get('.alert-msg') // Then the user should see the alert-msg "O campo nome é obrigatório."
-      .eq(0) // And Check the corresponding alert-msg
+    cy.contains('label', 'Nome Completo') // Then the user should see the alert-msg "Informe seu nome completo."
+      .parent() // And Check the parent element
+      .find('.alert-msg') // And Check the alert-msg
       .should('be.visible') // And Check if the alert-msg is visible
-      .and('have.text', 'O campo nome é obrigatório.'); // And Check if the alert-msg has the correct text
+      .and('have.text', 'O campo nome é obrigatório.'); // Then the user should see the alert-msg "Informe seu nome completo."
     cy.get('#email').clear(); // And clear the "email" field
-    cy.get('.alert-msg') // Then the user should see the alert-msg "O campo e-mail é obrigatório."
-      .eq(1) // And Check the corresponding alert-msg
+    cy.contains('label', 'E-mail') // Then the user should see the alert-msg "O campo e-mail é obrigatório."
+      .parent() // And Check the parent element
+      .find('.alert-msg') // And Check the alert-msg
       .should('be.visible') // And Check if the alert-msg is visible
-      .and('have.text', 'O campo e-mail é obrigatório.'); // And Check if the alert-msg has the correct text
+      .and('have.text', 'O campo e-mail é obrigatório.'); // Then the user should see the alert-msg "O campo e-mail é obrigatório."
   });
   it('"Cancel" button: Should cancel the login an return to the homepage', () => {
     cy.get('a[href = "pre-cadastro"]').click(); // When the user clicks on the "Entrar" button
-    cy.get('h2').should('have.text', 'Seus dados'); // Then the user should see the "Seus dados" form
+    cy.get('form h2').should('have.text', 'Seus dados'); // Then the user should see the "Seus dados" form
     cy.get('#nome').type('Teste Qa'); // And fill out the "name" field with "Teste Qa"
     cy.get('#email').type('qateste@teste.com'); // And fill out the "email" field
     cy.get('button[type="button"]').should('have.text', 'Cancelar').click(); // And click on the "Cancelar" button
@@ -49,37 +51,40 @@ customDescribeNumbered('Login', (it) => {
   });
   it('"Name" field: Should display a validation message when typed numbers', () => {
     cy.get('a[href = "pre-cadastro"]').click(); // When the user clicks on the "Entrar" button
-    cy.get('h2').should('have.text', 'Seus dados'); // Then the user should see the "Seus dados" form
+    cy.get('form h2').should('have.text', 'Seus dados'); // Then the user should see the "Seus dados" form
     cy.get('#nome').type('123456'); // And fill out the "name" field with "123456"
     cy.get('button[type="submit"]').should('have.text', 'Continuar').click(); // And click on the "Continuar" button
-    cy.get('.alert-msg') // Then the user should see the alert-msg "Informe seu nome completo.";
-      .eq(0) // And Check the corresponding alert-msg
+    cy.contains('label', 'Nome Completo') // Then the user should see the alert-msg "Insira apenas letras."
+      .parent() // And Check the parent element
+      .find('.alert-msg') // And Check the alert-msg
       .should('be.visible') // And Check if the alert-msg is visible
-      .and('have.text', 'Informe seu nome completo.'); // And Check if the alert-msg has the correct text
+      .and('have.text', 'Insira apenas letras.'); // Then the user should see the alert-msg "Insira apenas letras."
   });
   it('"Name" field: Should display a validation message when typed especial characters', () => {
     cy.get('a[href = "pre-cadastro"]').click(); // When the user clicks on the "Entrar" button
-    cy.get('h2').should('have.text', 'Seus dados'); // Then the user should see the "Seus dados" title
+    cy.get('form h2').should('have.text', 'Seus dados'); // Then the user should see the "Seus dados" title
     cy.get('#nome').type('%&*$#'); // And fill out the "name" field with "%&*$#"
     cy.get('button[type="submit"]').should('have.text', 'Continuar').click(); // And click on the "Continuar" button
-    cy.get('.alert-msg') // Then the user should see the alert-msg "Informe seu nome completo.";
-      .eq(0) // And Check the corresponding alert-msg
+    cy.contains('label', 'Nome Completo') // Then the user should see the alert-msg "Insira apenas letras."
+      .parent() // And Check the parent element
+      .find('.alert-msg') // And Check the alert-msg
       .should('be.visible') // And Check if the alert-msg is visible
-      .and('have.text', 'Informe seu nome completo.'); // And Check if the alert-msg has the correct text
+      .and('have.text', 'Insira apenas letras.'); // Then the user should see the alert-msg "Insira apenas letras."
   });
   it('"Name" field: Should display a validation message when typed only the first name', () => {
     cy.get('a[href = "pre-cadastro"]').click(); // When the user clicks on the "Entrar" button
-    cy.get('h2').should('have.text', 'Seus dados'); // Then the user should see the "Seus dados" title
+    cy.get('form h2').should('have.text', 'Seus dados'); // Then the user should see the "Seus dados" title
     cy.get('#nome').type('Teste'); // And fill out the "name" field with "Teste"
     cy.get('button[type="submit"]').should('have.text', 'Continuar').click(); // And click on the "Continuar" button
-    cy.get('.alert-msg') // Then the user should see the alert-msg "Informe seu nome completo.";
-      .eq(0) // And Check the corresponding alert-msg
+    cy.contains('label', 'Nome Completo') // Then the user should see the alert-msg "Informe seu nome completo."
+      .parent() // And Check the parent element
+      .find('.alert-msg') // And Check the alert-msg
       .should('be.visible') // And Check if the alert-msg is visible
-      .and('have.text', 'Informe seu nome completo.'); // And Check if the alert-msg has the correct text
+      .and('have.text', 'Informe seu nome completo.'); // Then the user should see the alert-msg "Informe seu nome completo."
   });
   it('"E-mail" field: Should display a validation message when typed invalid data', () => {
     cy.get('a[href = "pre-cadastro"]').click(); // When the user clicks on the "Entrar" button
-    cy.get('h2').should('have.text', 'Seus dados'); // Then the user should see the "Seus dados" title
+    cy.get('form h2').should('have.text', 'Seus dados'); // Then the user should see the "Seus dados" title
     cy.get('#email').type('www.teste.com'); // And fill out the "name" field with "www.teste.com"
     cy.get('button[type="submit"]').should('have.text', 'Continuar').click(); // And click on the "Continuar" button
     cy.get('.alert-msg') // Then the user should see the alert-msg "O e-mail inserido é inválido.";
