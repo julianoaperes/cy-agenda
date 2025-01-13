@@ -10,7 +10,7 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=skills # MongoDB root password
     restart: unless-stopped # Automatically restarts the container unless stopped manually
     ports:
-      - "27017:27017" # Maps port 27017 on the host to port 27017 in the container
+      - '27017:27017' # Maps port 27017 on the host to port 27017 in the container
 
   # Mongo Express service (web-based interface for MongoDB)
   mongoxp:
@@ -28,12 +28,12 @@ services:
       - mongodb # Links the Mongo Express container to the MongoDB container
     restart: unless-stopped # Automatically restarts the container unless stopped manually
     ports:
-      - "17017:8081" # Maps port 17017 on the host to port 8081 in the container
+      - '17017:8081' # Maps port 17017 on the host to port 8081 in the container
 
   # Backend API service
   rockshaver-api:
     container_name: rockshaver-api # The name of the backend API container
-    image: papitodev/rockshaver-api:pong # Uses the custom API image
+    image: papitodev/rockshaver-api:space # Uses the custom API image
     networks:
       - skynet # Connects this service to the 'skynet' network
     depends_on:
@@ -41,32 +41,32 @@ services:
     environment: # Environment variables for the API
       - MONGO_URI=mongodb://mongodb:27017/rockshaver # Connection string for MongoDB
     ports:
-      - "3333:3333" # Maps port 3333 on the host to port 3333 in the container
+      - '3333:3333' # Maps port 3333 on the host to port 3333 in the container
     restart: unless-stopped # Automatically restarts the container unless stopped manually
     command: /bin/sh -c "npm run go" # Command to run when the container starts
 
   # Frontend web application service
   rockshaver-web:
     container_name: rockshaver-web # The name of the frontend web app container
-    image: papitodev/rockshaver-web:pong # Uses the custom web app image
+    image: papitodev/rockshaver-web:space # Uses the custom web app image
     networks:
       - skynet # Connects this service to the 'skynet' network
     depends_on:
       - rockshaver-api # Ensures the API starts before this service
     ports:
-      - "3000:3000" # Maps port 3000 on the host to port 3000 in the container
+      - '3000:3000' # Maps port 3000 on the host to port 3000 in the container
     restart: unless-stopped # Automatically restarts the container unless stopped manually
 
   # Mobile application service
   rockshaver-mob:
     container_name: rockshaver-mob # The name of the mobile app container
-    image: papitodev/rockshaver-mob:pong # Uses the custom mobile app image
+    image: papitodev/rockshaver-mob:space # Uses the custom mobile app image
     networks:
       - skynet # Connects this service to the 'skynet' network
     depends_on:
       - rockshaver-api # Ensures the API starts before this service
     ports:
-      - "8100:8100" # Maps port 8100 on the host to port 8100 in the container
+      - '8100:8100' # Maps port 8100 on the host to port 8100 in the container
     restart: unless-stopped # Automatically restarts the container unless stopped manually
 
 # Network configuration
