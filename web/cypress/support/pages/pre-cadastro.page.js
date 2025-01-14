@@ -1,10 +1,8 @@
 class preCadastroPage {
   goPreCadastroComeçar() {
-    cy.get('a[href = "pre-cadastro"]').click(); // When the user clicks on the "Começar" button
     cy.get('form h2').should('have.text', 'Seus dados'); // Then the user should see the "Seus dados" form
   }
   goPreCadastroAgendar() {
-    cy.get('a[href = "/agendamento"]').click(); // When the user clicks on the "Agendar" button
     cy.get('form h2').should('have.text', 'Seus dados'); // Then the user should see the "Seus dados" form
   }
   fillForm(fullName, email) {
