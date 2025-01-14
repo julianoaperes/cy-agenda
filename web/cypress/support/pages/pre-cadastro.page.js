@@ -1,7 +1,4 @@
 class preCadastroPage {
-  goPreCadastroComeçar() {
-    cy.get('form h2').should('have.text', 'Seus dados'); // Then the user should see the "Seus dados" form
-  }
   goPreCadastroAgendar() {
     cy.get('form h2').should('have.text', 'Seus dados'); // Then the user should see the "Seus dados" form
   }
